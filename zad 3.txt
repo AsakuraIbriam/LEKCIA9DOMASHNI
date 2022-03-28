@@ -1,0 +1,55 @@
+#include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
+
+
+
+
+
+void bubbleSort(void *, size_t , size_t, int (*)(const void * , const void *));
+void swap (void *, void *, size_t);
+void (*getSorting(char *getName))(void *, size_t, size_t, int(*cmp)(const void *, const void*));
+
+int main()
+{
+    char c[50];
+    printf("Enter \"qsort\"or \"bubbleSort\":");
+    fgets(c, 50, stdin);
+
+    void (*fp)(void *, size_t, size_t, int(*cmp)(const void*, const void*)) = getSorting(c);
+    return 0;
+}
+
+
+void (*getSorting(char *getName))(void *, size_t, size_t, int(*cmp)(const void *, const void*)){
+    const char *qs = "qsort";
+    const char *bs = "bubbleSort";
+    if(strcmp(getName, qs) == 0) {
+            printf("sdsd");
+        return qsort;
+    }
+    if(strcmp(getName, bs) == 0) {
+
+        return bubbleSort;
+    }
+    return NULL;
+}
+
+void bubbleSort(void *arr, size_t elementsNumber, size_t singleElement, int (*comparator)(const void * p1, const void * p2)) {
+    for(int i = 0; i < elementsNumber - 1; i++) {
+        for(int j = 0; j < (elementsNumber - i - 1)*singleElement; j+=singleElement) {
+                if(comparator((arr + j), (arr + j + singleElement)) > 0){
+                        swap((arr + j), (arr + j + singleElement), singleElement);
+               }
+        }
+    }
+}
+
+
+
+void swap (void * p1, void * p2, size_t size) {
+    uint8_t arr[size];
+    memcpy(arr, p1, size);
+    memcpy(p1, p2, size);
+    memcpy(p2, arr, size);
+}
